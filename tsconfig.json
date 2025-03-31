@@ -3,6 +3,17 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@env/*": [
+        "./src/environments/*"
+      ],
+      "@global/*": [
+        "./src/app/global/*"
+      ],
+      "@layout/*": [
+        "./src/app/layout/*"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
