@@ -7,5 +7,5 @@ export interface IPlato {
     foto: string,
     dificultad: string,
     precio: number,
-    categoria: ICategoria
+    categoria?: ICategoria
 }
