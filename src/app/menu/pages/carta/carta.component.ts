@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IMenu, IMenuPlato, IPlato } from '@layout/models';
+import { IMenu, IMenuPlato } from '../../models';
 
 @Component({
   selector: 'app-carta',
