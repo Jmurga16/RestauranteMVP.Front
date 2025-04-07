@@ -1,0 +1,6 @@
+export * from './categoria.service'
+export * from './encargado.service'
+export * from './ingredientes.service'
+export * from './menu.service'
+export * from './plato.service'
+export * from './receta.service'
