@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import {
+  CategoriaHttpService,
+  MenuHttpService,
+  PlatoHttpService,
+} from '../../services';
+import { IPlato2 } from '../../models/plato2Interface';
+import { ICategoria2 } from '../../models/categoria2.interface';
 
 interface MenuItem {
   id: number;
@@ -13,7 +21,7 @@ interface MenuItem {
 }
 @Component({
   selector: 'app-plato',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './plato.component.html',
   styleUrl: './plato.component.css',
 })
@@ -21,58 +29,14 @@ export class PlatoComponent {
   // Removed redundant declaration of selectedCategory
   showChildMenu: boolean = false;
 
-  menuItems: MenuItem[] = [
-    {
-      id: 1,
-      name: 'Brownie de Chocolate',
-      description: 'Brownie con trozos de chocolate y nueces.',
-      price: 6,
-      image: 'assets/images/brownie.jpg',
-      category: 'Menú Infantil',
-    },
-    {
-      id: 2,
-      name: 'Pizza Mozzarella',
-      description: 'Pizza con salsa de tomate y queso',
-      price: 8,
-      image: 'assets/images/pizza.jpg',
-      category: 'Menú Infantil',
-    },
-    {
-      id: 3,
-      name: 'Tiramisú',
-      description: 'Postre clásico italiano con café y queso mascarpone',
-      price: 10,
-      image: 'assets/images/tiramisu.jpg',
-      category: 'Menú Infantil',
-    },
-    {
-      id: 4,
-      name: 'Carpaccio de Res',
-      description: 'Finas láminas de res con alcaparras y parmesano',
-      price: 60,
-      image: 'assets/images/carpaccio.jpg',
-      category: 'Menú Degustación',
-    },
-    {
-      id: 5,
-      name: 'Risotto de Champiñones',
-      description: 'Arroz cremoso con variedad de hongos frescos',
-      price: 85,
-      image: 'assets/images/risotto.jpg',
-      category: 'Menú Degustación',
-    },
-    {
-      id: 6,
-      name: 'Lomo Saltado',
-      description: 'Tiras de lomo fino salteadas con cebolla y tomate',
-      price: 45,
-      image: 'assets/images/lomo.jpg',
-      category: 'Menú Ejecutivo',
-    },
-  ];
-  filteredItems: MenuItem[] = this.menuItems;
-  categories: string[] = [];
+  constructor(
+    private platoHttpService: PlatoHttpService,
+    private categoriaHttpService: CategoriaHttpService
+  ) {}
+
+  menuItems: IPlato2[] = [];
+  filteredItems: IPlato2[] = [];
+  categories: ICategoria2[] = [];
 
   searchControl = new FormControl('');
   selectedCategory = new FormControl('');
@@ -81,9 +45,13 @@ export class PlatoComponent {
 
   ngOnInit(): void {
     // Extract unique categories
-    this.categories = Array.from(
-      new Set(this.menuItems.map((item) => item.category))
-    );
+    this.getPlatos();
+    this.getCategories();
+    // this.categories = Array.from(
+    //   new Set(this.menuItems.map((item) => item.categoria!.nombre))
+    // )
+    //   .sort((a, b) => a.localeCompare(b))
+    //   .map((name) => ({ nombre: name } as ICategoria));
 
     // Set up search filtering with debounce
     this.searchControl.valueChanges
@@ -100,35 +68,58 @@ export class PlatoComponent {
       .subscribe(() => this.applyFilters());
   }
 
+  getPlatos() {
+    this.platoHttpService.getAll().subscribe({
+      next: (response: any) => {
+        if (response) {
+          this.menuItems = response;
+          this.filteredItems = this.menuItems;
+        }
+      },
+    });
+  }
+  getCategories() {
+    this.categoriaHttpService.getAll().subscribe({
+      next: (response: any) => {
+        if (response) {
+          this.categories = response;
+          console.log(this.categories);
+        }
+      },
+    });
+  }
   applyFilters(): void {
     let result = this.menuItems;
+    console.log(result);
 
     // Filter by search term
     const searchTerm = this.searchControl.value?.toLowerCase();
     if (searchTerm) {
       result = result.filter(
         (item) =>
-          item.name.toLowerCase().includes(searchTerm) ||
-          item.description.toLowerCase().includes(searchTerm)
+          item.nombre.toLowerCase().includes(searchTerm) ||
+          item.descripcion.toLowerCase().includes(searchTerm)
       );
     }
 
     // Filter by category
     const category = this.selectedCategory.value;
+    console.log(category);
+
     if (category) {
-      result = result.filter((item) => item.category === category);
+      result = result.filter((item) => item.categoriaId === Number(category));
     }
 
     // Filter by min price
     const minPrice = this.minPriceControl.value;
     if (minPrice !== null && minPrice !== '') {
-      result = result.filter((item) => item.price >= Number(minPrice));
+      result = result.filter((item) => item.precio >= Number(minPrice));
     }
 
     // Filter by max price
     const maxPrice = this.maxPriceControl.value;
     if (maxPrice !== null && maxPrice !== '') {
-      result = result.filter((item) => item.price <= Number(maxPrice));
+      result = result.filter((item) => item.precio <= Number(maxPrice));
     }
 
     this.filteredItems = result;

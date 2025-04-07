@@ -41,8 +41,11 @@
           class="w-full px-4 py-2 border-2 border-amber-900 rounded-lg bg-white text-gray-900 shadow-md appearance-none focus:ring-2 focus:ring-amber-600 focus:border-amber-600 hover:bg-gray-100"
         >
           <option value="">Todas las categorías</option>
-          <option *ngFor="let category of categories" [value]="category">
-            {{ category }}
+          <option
+            *ngFor="let category of categories"
+            [value]="category.categoriaId"
+          >
+            {{ category.nombre }}
           </option>
         </select>
       </div>
@@ -101,8 +104,8 @@
       <!-- Image -->
       <div class="h-48 overflow-hidden">
         <img
-          [src]="item.image"
-          [alt]="item.name"
+          [src]="'assets/images/' + item.foto"
+          [alt]="item.nombre"
           class="w-full h-full object-cover"
         />
       </div>
@@ -110,19 +113,21 @@
       <!-- Content -->
       <div class="p-4">
         <div class="flex justify-between items-start">
-          <h3 class="text-xl font-semibold text-amber-800">{{ item.name }}</h3>
+          <h3 class="text-xl font-semibold text-amber-800">
+            {{ item.nombre }}
+          </h3>
           <span class="mt-4 text-amber-800 font-bold">
-            S/. {{ item.price }}
+            S/. {{ item.precio }}
           </span>
         </div>
 
-        <p class="mt-2 text-gray-600 text-sm">{{ item.description }}</p>
+        <p class="mt-2 text-gray-600 text-sm">{{ item.descripcion }}</p>
 
         <div class="mt-4 flex justify-between items-center">
           <span
             class="bg-amber-50 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded"
           >
-            {{ item.category }}
+            {{ item.categoria }}
           </span>
           <button
             class="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition"
