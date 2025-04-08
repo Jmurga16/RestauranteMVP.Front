@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+.bg-Dark-Cyan-Green {
+    background-color: rgb(15 39 39 / 1);
+}
+
+.bg-primary {
+    background-color: rgb(223 63 1 / 1);
+}
+
+.text-primary {
+    color: rgb(223 63 1 / 1);
+}
+
+.bg-Deep-Teal {
+    background-color: rgb(16 43 42 / 1);
+}
