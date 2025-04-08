@@ -44,16 +44,9 @@ export class PlatoComponent {
   maxPriceControl = new FormControl('');
 
   ngOnInit(): void {
-    // Extract unique categories
     this.getPlatos();
     this.getCategories();
-    // this.categories = Array.from(
-    //   new Set(this.menuItems.map((item) => item.categoria!.nombre))
-    // )
-    //   .sort((a, b) => a.localeCompare(b))
-    //   .map((name) => ({ nombre: name } as ICategoria));
 
-    // Set up search filtering with debounce
     this.searchControl.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe(() => this.applyFilters());
@@ -131,5 +124,23 @@ export class PlatoComponent {
     this.minPriceControl.setValue('');
     this.maxPriceControl.setValue('');
     this.filteredItems = this.menuItems;
+  }
+  mostrarIngredientes() {}
+  modalActivo: number = -1;
+
+  ingredientesComunes: string[] = [
+    'Tomate',
+    'Queso',
+    'Lechuga',
+    'Pan',
+    'Carne',
+  ];
+
+  abrirModal(index: number) {
+    this.modalActivo = index;
+  }
+
+  cerrarModal() {
+    this.modalActivo = -1;
   }
 }
