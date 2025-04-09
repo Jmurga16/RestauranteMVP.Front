@@ -1,5 +1,5 @@
 export interface IIngredientes {
-    id: number,
+    ingredienteId: number,
     nombre: string,
     unidadMedida: string,
     cantidadDisponible: string,

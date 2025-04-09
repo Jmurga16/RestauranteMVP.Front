@@ -21,6 +21,7 @@ export class IngredientesComponent implements OnInit {
   totalPages = 0;
 
   isModalVisible = false;
+  currentIngrediente?: IIngredientes;
 
   constructor(
     private ingredientesHttpService: IngredientesHttpService
@@ -35,12 +36,25 @@ export class IngredientesComponent implements OnInit {
   getIngredientes() {
     this.ingredientesHttpService.getAll().subscribe({
       next: (response) => {
+  
         this.ingredientesListTotal = response
-        this.totalItems = this.ingredientesListTotal.length;
-        this.totalPages = Math.ceil(this.totalItems / this.pageSize);
-        this.setPage(this.currentPage);
+        this.updatePagination()
       }
     });
+  }
+
+  updatePagination() {
+    this.totalItems = this.ingredientesListTotal.length;
+    this.totalPages = Math.ceil(this.totalItems / this.pageSize);
+
+    const isExactMultiple = this.totalItems % this.pageSize === 0;
+
+    if (isExactMultiple && this.currentPage > this.totalPages) {
+      this.setPage(this.currentPage - 1);
+    } else {
+      this.setPage(this.currentPage);
+    }
+
   }
 
   setPage(page: number) {
@@ -66,7 +80,9 @@ export class IngredientesComponent implements OnInit {
     return Array.from({ length: this.totalPages });
   }
 
-  openModalForm(modalAction: string) {
+  openModalForm(item?: IIngredientes) {
+    console.log(item)
+    this.currentIngrediente = item;
     this.isModalVisible = true;
   }
 
@@ -75,15 +91,21 @@ export class IngredientesComponent implements OnInit {
   }
 
   saveIngredientes(ingredient: IIngredientes) {
-    /* if (this.modalAction === 'add') {
-      this.ingredientsList.push(ingredient)
-    } else {
-      const index = this.ingredientsList.findIndex(item => item.name === ingredient.name);
-      if (index !== -1) {
-        this.ingredientsList[index] = ingredient; 
+    this.ingredientesHttpService.save(ingredient).subscribe({
+      next: (response) => {
+        console.log(response)
+        this.getIngredientes();
       }
-    } */
-    this.closeModal();
+    });
+  }
+
+  deleteIngrediente(id: number) {
+
+    this.ingredientesHttpService.delete(id).subscribe({
+      next: () => {
+        this.getIngredientes()
+      }
+    });
   }
 
 }
