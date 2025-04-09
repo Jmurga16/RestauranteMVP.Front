@@ -5,11 +5,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
   CategoriaHttpService,
+  IngredientesHttpService,
   MenuHttpService,
   PlatoHttpService,
 } from '../../services';
 import { IPlato2 } from '../../models/plato2Interface';
 import { ICategoria2 } from '../../models/categoria2.interface';
+import { IIngredientes } from '../../models';
 
 interface MenuItem {
   id: number;
@@ -26,36 +28,42 @@ interface MenuItem {
   styleUrl: './plato.component.css',
 })
 export class PlatoComponent {
-  // Removed redundant declaration of selectedCategory
+
   showChildMenu: boolean = false;
-
-  constructor(
-    private platoHttpService: PlatoHttpService,
-    private categoriaHttpService: CategoriaHttpService
-  ) {}
-
   menuItems: IPlato2[] = [];
   filteredItems: IPlato2[] = [];
   categories: ICategoria2[] = [];
+  ingredientes: IIngredientes[] = []
 
   searchControl = new FormControl('');
   selectedCategory = new FormControl('');
   minPriceControl = new FormControl('');
   maxPriceControl = new FormControl('');
+  modalActivo: number = -1;
+
+  constructor(
+    private platoHttpService: PlatoHttpService,
+    private categoriaHttpService: CategoriaHttpService,
+    private ingredientesHttpService: IngredientesHttpService
+  ) { }
+
+
 
   ngOnInit(): void {
     this.getPlatos();
     this.getCategories();
+    this.getIngredientes()
 
     this.searchControl.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe(() => this.applyFilters());
 
-    // Set up other filters
     this.selectedCategory.valueChanges.subscribe(() => this.applyFilters());
+
     this.minPriceControl.valueChanges
       .pipe(debounceTime(500))
       .subscribe(() => this.applyFilters());
+
     this.maxPriceControl.valueChanges
       .pipe(debounceTime(500))
       .subscribe(() => this.applyFilters());
@@ -71,6 +79,7 @@ export class PlatoComponent {
       },
     });
   }
+
   getCategories() {
     this.categoriaHttpService.getAll().subscribe({
       next: (response: any) => {
@@ -81,6 +90,18 @@ export class PlatoComponent {
       },
     });
   }
+
+  getIngredientes() {
+    this.ingredientesHttpService.getAll().subscribe({
+      next: (response) => {
+        if (response) {
+          this.ingredientes = response;
+          console.log(this.categories);
+        }
+      },
+    });
+  }
+
   applyFilters(): void {
     let result = this.menuItems;
     console.log(result);
@@ -125,8 +146,10 @@ export class PlatoComponent {
     this.maxPriceControl.setValue('');
     this.filteredItems = this.menuItems;
   }
-  mostrarIngredientes() {}
-  modalActivo: number = -1;
+
+  mostrarIngredientes() {
+
+  }
 
   ingredientesComunes: string[] = [
     'Tomate',
