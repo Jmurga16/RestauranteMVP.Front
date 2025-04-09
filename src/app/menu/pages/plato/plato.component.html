@@ -8,22 +8,23 @@
   </div>
 
   <!-- Filters Section -->
-  <div class="bg-white rounded-lg shadow-lg p-6 mb-12">
-    <h2 class="text-xl font-semibold mb-4 text-amber-800">Filtros</h2>
+  <div class="bg-white dark:bg-gray-800  rounded-lg shadow-lg p-6 mb-12">
+    <h2 class="text-xl font-bold mb-4 text-amber-800 dark:text-amber-600 ">Filtros</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <!-- Search Input -->
       <div>
-        <label for="search" class="block text-sm font-medium text-amber-800 mb-1">Buscar</label>
+        <label for="search" class="block text-sm font-medium text-amber-800 dark:text-amber-600  mb-1">Buscar</label>
         <input type="text" id="search" [formControl]="searchControl" placeholder="Buscar platos..."
-          class="w-full px-4 py-2 border-2 border-amber-900 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600" />
+          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 dark:text-white" />
       </div>
 
       <!-- Category Filter -->
       <div>
-        <label for="category" class="block text-sm font-medium text-amber-800 mb-1">Categoría</label>
+        <label for="category"
+          class="block text-sm font-medium text-amber-800 dark:text-amber-600 mb-1">Categoría</label>
         <select id="category" [formControl]="selectedCategory"
-          class="w-full px-4 py-2 border-2 border-amber-900 rounded-lg bg-white text-gray-900 shadow-md appearance-none focus:ring-2 focus:ring-amber-600 focus:border-amber-600 hover:bg-gray-100">
+          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg  dark:bg-gray-800 text-gray-900 dark:text-white shadow-md appearance-none focus:ring-2 focus:ring-amber-600 focus:border-amber-600 ">
           <option value="">Todas las categorías</option>
           <option *ngFor="let category of categories" [value]="category.categoriaId">
             {{ category.nombre }}
@@ -33,16 +34,17 @@
 
       <!-- Min Price Filter -->
       <div>
-        <label for="minPrice" class="mt-4 text-amber-800 font-bold">Precio mínimo (S/.)</label>
+        <label for="minPrice" class="mt-4 text-amber-800 dark:text-amber-600">Precio mínimo (S/.)</label>
         <input type="number" id="minPrice" [formControl]="minPriceControl" placeholder="Min" min="0"
-          class="w-full px-4 py-2 border-2 border-amber-900 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600" />
+          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 dark:text-white" />
       </div>
 
       <!-- Max Price Filter -->
       <div>
-        <label for="maxPrice" class="block text-sm font-medium text-amber-800 mb-1">Precio máximo (S/.)</label>
+        <label for="maxPrice" class="block text-sm font-medium text-amber-800 dark:text-amber-600 mb-1">Precio máximo
+          (S/.)</label>
         <input type="number" id="maxPrice" [formControl]="maxPriceControl" placeholder="Max" min="0"
-          class="w-full px-4 py-2 border-2 border-amber-900 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600" />
+          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 dark:text-white" />
       </div>
     </div>
 
@@ -59,7 +61,7 @@
   @if (filteredItems.length > 0) {
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @for (item of filteredItems; track $index) {
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105 hover:shadow-xl">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105 hover:shadow-xl">
       <!-- Image -->
       <div class="h-48 overflow-hidden">
         <img [src]="'assets/images/' + item.foto" [alt]="item.nombre" class="w-full h-full object-cover" />
@@ -68,23 +70,29 @@
       <!-- Content -->
       <div class="p-4">
         <div class="flex justify-between items-start">
-          <h3 class="text-xl font-semibold text-amber-800">
+          <h3 class="text-xl font-semibold text-amber-800 dark:text-amber-600">
             {{ item.nombre }}
           </h3>
-          <span class="mt-4 text-amber-800 font-bold">
+          <span class="mt-4 text-amber-800 dark:text-amber-600 font-bold">
             S/. {{ item.precio }}
           </span>
         </div>
 
-        <p class="mt-2 text-gray-600 text-sm">{{ item.descripcion }}</p>
+        <p class="mt-2 text-gray-600 dark:text-white text-sm">{{ item.descripcion }}</p>
 
         <div class="mt-4 flex justify-between items-center">
-          <span class="bg-amber-50 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded">
+          <!-- <span class="bg-amber-50 text-amber-800 dark:text-amber-600 text-xs font-medium px-2.5 py-0.5 rounded">
             {{ item.categoria }}
-          </span>
+          </span> -->
+
+          <button class="px-4 py-2 bg-primary text-white rounded-md hover:bg-amber-700 transition cursor-pointer"
+            (click)="abrirModal($index)">
+            Receta
+          </button>
+
           <button class="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition cursor-pointer"
             (click)="abrirModal($index)">
-            Lista Ingredientes
+            Ingredientes
           </button>
 
           <div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="modalActivo === $index">
@@ -92,7 +100,7 @@
             <div class="bg-white rounded-xl shadow-xl w-80 mx-4 relative z-10">
               <div class="p-6">
                 <div class="flex justify-between items-center mb-4">
-                  <h2 class="text-xl font-semibold text-amber-800">
+                  <h2 class="text-xl font-semibold text-amber-800 dark:text-amber-600">
                     Lista de Ingredientes
                   </h2>
                   <button class="text-gray-500 hover:text-red-500 cursor-pointer" (click)="cerrarModal()">
@@ -122,12 +130,12 @@
   } @else {
   <!-- No Items Template -->
   <div class="text-center py-12 bg-amber-50 rounded-lg">
-    <svg class="mx-auto h-12 w-12 text-amber-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg">
+    <svg class="mx-auto h-12 w-12 text-amber-800 dark:text-amber-600" fill="none" stroke="currentColor"
+      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
     </svg>
-    <h3 class="mt-2 text-lg font-medium text-amber-800">
+    <h3 class="mt-2 text-lg font-medium text-amber-800 dark:text-amber-600">
       No se encontraron platos
     </h3>
     <p class="mt-1 text-sm text-gray-600">Intenta con otros filtros</p>
