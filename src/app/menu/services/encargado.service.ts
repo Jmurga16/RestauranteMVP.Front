@@ -33,5 +33,9 @@ import { IEncargado } from '../models';
     delete(id: number): Observable<void> {
       return this.http.delete<void>(`${this.apiUrl}/encargado/${id}`);
     }
+
+    getEncargadoCategorias(): Observable<IEncargado[]> {
+      return this.http.get<IEncargado[]>(`${this.apiUrl}/encargado-categorias`);
+    }
   }
   
