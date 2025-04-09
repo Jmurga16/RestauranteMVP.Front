@@ -47,13 +47,13 @@
                 @for (item of getFilteredItems(); track $index) {
                 <div class="flex bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
                     <div class="w-1/3">
-                        <img [src]="item.plato.foto" alt="{{ item.plato.foto }}" class="w-full h-full object-cover" />
+                        <img [src]="'assets/images/' + item.foto" alt="{{ item.foto }}" class="w-full h-full object-cover" />
                     </div>
                     <div class="w-2/3 p-4">
-                        <h4 class="text-xl font-medium text-amber-900">{{ item.plato.nombre }}</h4>
-                        <p class="text-gray-600 text-sm mt-1">{{ item.plato.descripcion }}</p>
+                        <h4 class="text-xl font-medium text-amber-900">{{ item.nombre }}</h4>
+                        <p class="text-gray-600 text-sm mt-1">{{ item.descripcion }}</p>
                         <div class="mt-4 text-amber-800 font-bold">
-                            S/.{{ item.plato.precio.toLocaleString() }}
+                            S/. {{ item.precio.toLocaleString() }}
                         </div>
                     </div>
                 </div>
