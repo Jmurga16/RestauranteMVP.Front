@@ -1,3 +1,5 @@
+import { ICategoria } from "./categoria.interface"
+
 export interface IEncargado {
     id: number,
     nombre: string,
@@ -7,4 +9,7 @@ export interface IEncargado {
     email: string,
     telefono: string,
     direccion: string
+    categorias: ICategoria[]
+
+    mostrarCategorias?: boolean
 }
