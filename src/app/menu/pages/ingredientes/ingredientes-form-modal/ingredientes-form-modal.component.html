@@ -1,60 +1,108 @@
 @if (isVisible==true) {
 <div class="fixed inset-0 z-50 flex items-center justify-center">
+  <div class="fixed inset-0 bg-black/50" (click)="closeModal()"></div>
 
-    <div class="fixed inset-0 bg-black/50" (click)="closeModal()"></div>
-
-    <div class="relative bg-white dark:bg-gray-700 rounded-lg shadow-lg z-10 w-full max-w-md p-6">
-        <div class="flex justify-between items-center border-b pb-2 dark:border-gray-600">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{titleModal}}</h3>
-            <button (click)="closeModal()"
-                class="text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
-
-        <form class="mt-4" [formGroup]="ingredientesForm" autocomplete="off" (ngSubmit)="onSubmit()">
-            <div class="mb-4">
-                <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Nombre
-                </label>
-                <input id="nombre" formControlName="nombre"
-                    class="w-full rounded border px-3 py-2 text-sm dark:bg-gray-600 dark:text-white" />
-            </div>
-
-            <div class="mb-4">
-                <label for="unidadMedida" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Unidad Medida
-                </label>
-                <input id="unidadMedida" formControlName="unidadMedida"
-                    class="w-full rounded border px-3 py-2 text-sm dark:bg-gray-600 dark:text-white" />
-            </div>
-
-            <div class="mb-4">
-                <label for="cantidadDisponible" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Cantidad Disponible
-                </label>
-                <input type="number" id="cantidadDisponible" formControlName="cantidadDisponible"
-                    class="w-full rounded border px-3 py-2 text-sm dark:bg-gray-600 dark:text-white" />
-            </div>
-
-            <div class="flex justify-end gap-2 mt-4">
-                <button type="submit"
-                    class="bg-primary hover:bg-amber-600 text-white font-medium rounded-lg text-sm px-4 py-2 cursor-pointer"
-                    [disabled]="ingredientesForm.valid"
-                    [ngClass]="{'!bg-gray-400 cursor-not-allowed hover:bg-gray-500': !ingredientesForm.valid}">
-                    Guardar Cambios
-                </button>
-
-                <button type="button" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg text-sm px-4 py-2 
-                    dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500  cursor-pointer" (click)="closeModal()">
-                    Cancelar
-                </button>
-            </div>
-
-        </form>
+  <div
+    class="relative bg-amber-50 dark:bg-gray-700 rounded-lg shadow-lg z-10 w-full max-w-md p-6"
+  >
+    <div
+      class="flex justify-between items-center border-b pb-2 dark:border-gray-600"
+    >
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+        {{ titleModal }}
+      </h3>
+      <button
+        (click)="closeModal()"
+        class="text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
     </div>
+
+    <form
+      class="mt-4"
+      [formGroup]="ingredientesForm"
+      autocomplete="off"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="mb-4">
+        <label
+          for="nombre"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Nombre
+        </label>
+        <input
+          id="nombre"
+          formControlName="nombre"
+          class="w-full rounded border px-3 py-2 text-sm dark:bg-gray-600 dark:text-white"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="unidadMedida"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Unidad Medida
+        </label>
+        <input
+          id="unidadMedida"
+          formControlName="unidadMedida"
+          class="w-full rounded border px-3 py-2 text-sm dark:bg-gray-600 dark:text-white"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="cantidadDisponible"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Cantidad Disponible
+        </label>
+        <input
+          type="number"
+          id="cantidadDisponible"
+          formControlName="cantidadDisponible"
+          class="w-full rounded border px-3 py-2 text-sm dark:bg-gray-600 dark:text-white"
+        />
+      </div>
+
+      <div class="flex justify-end gap-2 mt-4">
+        <button
+          type="submit"
+          class="bg-primary hover:bg-amber-600 text-white font-medium rounded-lg text-sm px-4 py-2 cursor-pointer"
+          [disabled]="ingredientesForm.valid"
+          [ngClass]="{
+            '!bg-gray-400 cursor-not-allowed hover:bg-gray-500':
+              !ingredientesForm.valid
+          }"
+        >
+          Guardar Cambios
+        </button>
+
+        <button
+          type="button"
+          class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-500 cursor-pointer"
+          (click)="closeModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 }
