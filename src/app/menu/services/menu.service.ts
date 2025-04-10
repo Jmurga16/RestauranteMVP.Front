@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 import { IMenu, IMenuPlato } from '../models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MenuHttpService {
   private apiUrl: string;
@@ -38,4 +38,3 @@ export class MenuHttpService {
     return this.http.get<IMenuPlato[]>(`${this.apiUrl}/menu-plato`);
   }
 }
-

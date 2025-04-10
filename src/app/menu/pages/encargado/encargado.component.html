@@ -1,78 +1,93 @@
 <div class="container mx-auto px-4 py-8">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-serif font-bold mb-2 text-white">Encargados</h1>
+    <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
+  </div>
 
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-serif font-bold  mb-2 text-white">
-            Encargados
-        </h1>
-        <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
-    </div>
+  <div
+    class="w-full max-w-3/8 px-8 mx-auto bg-amber-50 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600"
+  >
+    <div class="flow-root">
+      <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+        @for (item of encargadosList ; track $index) {
 
-    <div
-        class="w-full max-w-3/8 px-8 mx-auto bg-white border border-gray-200 rounded-lg shadow-sm  dark:bg-gray-800 dark:border-gray-700">
+        <li class="py-4 sm:py-5">
+          <div class="flex items-start gap-4">
+            <!-- Avatar -->
+            <div class="shrink-0">
+              <img
+                class="w-10 h-10 rounded-full"
+                src="/assets/images/avatar.png"
+                alt="Avatar image"
+              />
+            </div>
 
-        <div class="flow-root">
-            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+            <!-- Info -->
+            <div class="flex-1 min-w-0">
+              <p class="text-xl font-semibold text-gray-900 dark:text-white">
+                {{ item.nombre }} {{ item.apellido }}
+              </p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">
+                {{ item.email }}
+              </p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">
+                {{ item.tipoDocumento }}: {{ item.documento }}
+              </p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">
+                Tel: {{ item.telefono }}
+              </p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">
+                Dirección: {{ item.direccion }}
+              </p>
 
-                @for (item of encargadosList ; track $index) {
+              <!-- Categorías -->
+              <div *ngIf="item.mostrarCategorias" class="mt-2">
+                <hr class="text-white" />
+                <h2 class="text-white my-3">Categorías:</h2>
 
-                <li class="py-4 sm:py-5">
-                    <div class="flex items-start gap-4">
-                        <!-- Avatar -->
-                        <div class="shrink-0">
-                            <img class="w-10 h-10 rounded-full" src="/assets/images/avatar.png" alt="Avatar image" />
-                        </div>
+                @for (categoria of item.categorias; track $index) {
 
-                        <!-- Info -->
-                        <div class="flex-1 min-w-0">
-                            <p class="text-xl       font-semibold text-gray-900 dark:text-white">
-                                {{ item.nombre }} {{ item.apellido }}
-                            </p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ item.email }}</p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">
-                                {{ item.tipoDocumento }}: {{ item.documento }}
-                            </p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Tel: {{ item.telefono }}</p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Dirección: {{ item.direccion }}</p>
-
-                            <!-- Categorías -->
-                            <div *ngIf="item.mostrarCategorias" class="mt-2">
-
-                                <hr class="text-white">
-                                <h2 class="text-white my-3">Categorías:</h2>
-
-                                @for (categoria of item.categorias; track $index) {
-
-                                <div id="toast-default"
-                                    class="flex items-center w-full max-w-xs p-3 text-gray-500 bg-white rounded-lg shadow-sm dark:text-gray-700 dark:bg-gray-300"
-                                    role="alert">
-                                    <div
-                                        class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:bg-blue-800 dark:text-blue-200">
-                                        <svg class="w-4 h-4 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                            fill="currentColor" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                        </svg>
-                                        <span class="sr-only">Info</span>
-                                    </div>
-                                    <div class="ms-3 text-sm font-normal">{{ categoria.nombre }}</div>
-
-                                </div>
-                                }
-
-                            </div>
-                        </div>
-
-                        <div class="inline-flex items-center">
-                            <button (click)="item.mostrarCategorias = !item.mostrarCategorias"
-                                class="text-sm px-3 py-1 bg-amber-600 text-white rounded hover:bg-amber-700 transition">
-                                {{ item.mostrarCategorias? 'Ocultar':'Ver Categorías' }}
-                            </button>
-                        </div>
-                    </div>
-                </li>
+                <div
+                  id="toast-default"
+                  class="flex items-center w-full max-w-xs p-3 text-gray-500 bg-white rounded-lg shadow-sm dark:text-gray-700 dark:bg-gray-300"
+                  role="alert"
+                >
+                  <div
+                    class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-blue-500 bg-blue-100 rounded-lg dark:bg-blue-800 dark:text-blue-200"
+                  >
+                    <svg
+                      class="w-4 h-4"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+                      />
+                    </svg>
+                    <span class="sr-only">Info</span>
+                  </div>
+                  <div class="ms-3 text-sm font-normal">
+                    {{ categoria.nombre }}
+                  </div>
+                </div>
                 }
+              </div>
+            </div>
 
-            </ul>
-        </div>
+            <div class="inline-flex items-center">
+              <button
+                (click)="item.mostrarCategorias = !item.mostrarCategorias"
+                class="text-sm px-3 py-1 bg-amber-600 text-white rounded hover:bg-amber-700 transition"
+              >
+                {{ item.mostrarCategorias ? "Ocultar" : "Ver Categorías" }}
+              </button>
+            </div>
+          </div>
+        </li>
+        }
+      </ul>
     </div>
+  </div>
 </div>

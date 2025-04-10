@@ -1,32 +1,51 @@
 <div class="container mx-auto px-4 py-8">
-
   <div class="text-center mb-12">
-    <h1 class="text-4xl font-serif font-bold  mb-2 text-white">
+    <h1 class="text-4xl font-serif font-bold mb-2 text-white">
       Lista de Platos
     </h1>
     <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
   </div>
 
   <!-- Filters Section -->
-  <div class="bg-white dark:bg-gray-800  rounded-lg shadow-lg p-6 mb-12">
-    <h2 class="text-xl font-bold mb-4 text-amber-800 dark:text-amber-600 ">Filtros</h2>
+  <div class="bg-amber-50 dark:bg-gray-700 rounded-lg shadow-lg p-6 mb-12">
+    <h2 class="text-xl font-bold mb-4 text-amber-800 dark:text-amber-600">
+      Filtros
+    </h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <!-- Search Input -->
       <div>
-        <label for="search" class="block text-sm font-medium text-amber-800 dark:text-amber-600  mb-1">Buscar</label>
-        <input type="text" id="search" [formControl]="searchControl" placeholder="Buscar platos..."
-          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 dark:text-white" />
+        <label
+          for="search"
+          class="block text-sm font-medium text-amber-800 dark:text-amber-600 mb-1"
+          >Buscar</label
+        >
+        <input
+          type="text"
+          id="search"
+          [formControl]="searchControl"
+          placeholder="Buscar platos..."
+          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 dark:text-white"
+        />
       </div>
 
       <!-- Category Filter -->
       <div>
-        <label for="category"
-          class="block text-sm font-medium text-amber-800 dark:text-amber-600 mb-1">Categoría</label>
-        <select id="category" [formControl]="selectedCategory"
-          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg  dark:bg-gray-800 text-gray-900 dark:text-white shadow-md appearance-none focus:ring-2 focus:ring-amber-600 focus:border-amber-600 ">
+        <label
+          for="category"
+          class="block text-sm font-medium text-amber-800 dark:text-amber-600 mb-1"
+          >Categoría</label
+        >
+        <select
+          id="category"
+          [formControl]="selectedCategory"
+          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg dark:bg-gray-700 text-gray-900 dark:text-white shadow-md appearance-none focus:ring-2 focus:ring-amber-600 focus:border-amber-600"
+        >
           <option value="">Todas las categorías</option>
-          <option *ngFor="let category of categories" [value]="category.categoriaId">
+          <option
+            *ngFor="let category of categories"
+            [value]="category.categoriaId"
+          >
             {{ category.nombre }}
           </option>
         </select>
@@ -34,24 +53,43 @@
 
       <!-- Min Price Filter -->
       <div>
-        <label for="minPrice" class="mt-4 text-amber-800 dark:text-amber-600">Precio mínimo (S/.)</label>
-        <input type="number" id="minPrice" [formControl]="minPriceControl" placeholder="Min" min="0"
-          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 dark:text-white" />
+        <label for="minPrice" class="mt-4 text-amber-800 dark:text-amber-600"
+          >Precio mínimo (S/.)</label
+        >
+        <input
+          type="number"
+          id="minPrice"
+          [formControl]="minPriceControl"
+          placeholder="Min"
+          min="0"
+          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 dark:text-white"
+        />
       </div>
 
       <!-- Max Price Filter -->
       <div>
-        <label for="maxPrice" class="block text-sm font-medium text-amber-800 dark:text-amber-600 mb-1">Precio máximo
-          (S/.)</label>
-        <input type="number" id="maxPrice" [formControl]="maxPriceControl" placeholder="Max" min="0"
-          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 dark:text-white" />
+        <label
+          for="maxPrice"
+          class="block text-sm font-medium text-amber-800 dark:text-amber-600 mb-1"
+          >Precio máximo (S/.)</label
+        >
+        <input
+          type="number"
+          id="maxPrice"
+          [formControl]="maxPriceControl"
+          placeholder="Max"
+          min="0"
+          class="w-full px-4 py-2 border-2 border-amber-900 dark:border-amber-600 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 dark:text-white"
+        />
       </div>
     </div>
 
     <!-- Reset Button -->
     <div class="mt-4 text-right">
-      <button (click)="resetFilters()"
-        class="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition">
+      <button
+        (click)="resetFilters()"
+        class="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition"
+      >
         Limpiar filtros
       </button>
     </div>
@@ -61,10 +99,16 @@
   @if (filteredItems.length > 0) {
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @for (item of filteredItems; track $index) {
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105 hover:shadow-xl">
+    <div
+      class="bg-amber-50 dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105 hover:shadow-xl"
+    >
       <!-- Image -->
       <div class="h-48 overflow-hidden">
-        <img [src]="'assets/images/' + item.foto" [alt]="item.nombre" class="w-full h-full object-cover" />
+        <img
+          [src]="'assets/images/' + item.foto"
+          [alt]="item.nombre"
+          class="w-full h-full object-cover"
+        />
       </div>
 
       <!-- Content -->
@@ -78,35 +122,61 @@
           </span>
         </div>
 
-        <p class="mt-2 text-gray-600 dark:text-white text-sm">{{ item.descripcion }}</p>
+        <p class="mt-2 text-gray-600 dark:text-white text-sm">
+          {{ item.descripcion }}
+        </p>
 
         <div class="mt-4 flex justify-between items-center">
           <!-- <span class="bg-amber-50 text-amber-800 dark:text-amber-600 text-xs font-medium px-2.5 py-0.5 rounded">
             {{ item.categoria }}
           </span> -->
 
-          <button class="px-4 py-2 bg-primary text-white rounded-md hover:bg-amber-700 transition cursor-pointer"
-            (click)="abrirModal($index)">
+          <button
+            class="px-4 py-2 bg-primary text-white rounded-md hover:bg-amber-700 transition cursor-pointer"
+            (click)="abrirModalReceta($index)"
+          >
             Receta
           </button>
 
-          <button class="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition cursor-pointer"
-            (click)="abrirModal($index)">
+          <button
+            class="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition cursor-pointer"
+            (click)="abrirModalIngrediente($index)"
+          >
             Ingredientes
           </button>
 
-          <div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="modalActivo === $index">
-            <div class="absolute inset-0 bg-gray-500 bg-opacity-90" (click)="cerrarModal()"></div>
+          <div
+            class="fixed inset-0 flex items-center justify-center z-50"
+            *ngIf="modalActivoIngrediente === $index"
+          >
+            <div
+              class="absolute inset-0 bg-gray-500 bg-opacity-90"
+              (click)="cerrarModal()"
+            ></div>
             <div class="bg-white rounded-xl shadow-xl w-80 mx-4 relative z-10">
               <div class="p-6">
                 <div class="flex justify-between items-center mb-4">
-                  <h2 class="text-xl font-semibold text-amber-800 dark:text-amber-600">
+                  <h2
+                    class="text-xl font-semibold text-amber-800 dark:text-amber-600"
+                  >
                     Lista de Ingredientes
                   </h2>
-                  <button class="text-gray-500 hover:text-red-500 cursor-pointer" (click)="cerrarModal()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                      class="lucide lucide-x">
+                  <button
+                    class="text-gray-500 hover:text-red-500 cursor-pointer"
+                    (click)="cerrarModal()"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-x"
+                    >
                       <path d="M18 6 6 18"></path>
                       <path d="m6 6 12 12"></path>
                     </svg>
@@ -114,11 +184,66 @@
                 </div>
 
                 <ul class="space-y-2">
-                  <li *ngFor="let ingrediente of ingredientesComunes" class="flex items-center">
+                  <li
+                    *ngFor="let ingrediente of ingredientes"
+                    class="flex items-center"
+                  >
                     <div class="w-2 h-2 rounded-full bg-amber-600 mr-3"></div>
-                    <span>{{ ingrediente }}</span>
+                    <span>{{ ingrediente.nombre }}</span>
                   </li>
                 </ul>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="fixed inset-0 flex items-center justify-center z-50"
+            *ngIf="modalActivoReceta === $index"
+          >
+            <div
+              class="absolute inset-0 bg-gray-500 bg-opacity-90"
+              (click)="cerrarModal()"
+            ></div>
+            <div
+              class="bg-white rounded-xl shadow-xl w-96 mx-4 relative z-10 max-h-[80vh] overflow-y-auto"
+            >
+              <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                  <h2
+                    class="text-xl font-semibold text-amber-800 dark:text-amber-600"
+                  >
+                    Receta
+                  </h2>
+                  <button
+                    class="text-gray-500 hover:text-red-500 cursor-pointer"
+                    (click)="cerrarModal()"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-x"
+                    >
+                      <path d="M18 6 6 18"></path>
+                      <path d="m6 6 12 12"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Texto de la receta -->
+                <div>
+                  <p class="text-gray-700 whitespace-pre-line">
+                    {{
+                      recetaActual?.textoReceta || "No hay receta disponible."
+                    }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -130,18 +255,29 @@
   } @else {
   <!-- No Items Template -->
   <div class="text-center py-12 bg-amber-50 rounded-lg">
-    <svg class="mx-auto h-12 w-12 text-amber-800 dark:text-amber-600" fill="none" stroke="currentColor"
-      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    <svg
+      class="mx-auto h-12 w-12 text-amber-800 dark:text-amber-600"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      ></path>
     </svg>
     <h3 class="mt-2 text-lg font-medium text-amber-800 dark:text-amber-600">
       No se encontraron platos
     </h3>
     <p class="mt-1 text-sm text-gray-600">Intenta con otros filtros</p>
     <div class="mt-6">
-      <button (click)="resetFilters()"
-        class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-800 hover:bg-amber-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-600">
+      <button
+        (click)="resetFilters()"
+        class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-800 hover:bg-amber-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-600"
+      >
         Limpiar filtros
       </button>
     </div>

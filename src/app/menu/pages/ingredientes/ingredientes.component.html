@@ -1,138 +1,192 @@
 <div class="container mx-auto px-4 py-8">
-    <div class="text-center mb-8">
-        <h1 class="text-4xl font-serif font-bold text-white mb-2">
-            Lista de Ingredientes
-        </h1>
-        <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
-    </div>
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-serif font-bold text-white mb-2">
+      Lista de Ingredientes
+    </h1>
+    <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
+  </div>
 
-    <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-        <div class=" bg-transparent dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-            <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                <div>
-                </div>
-                <div
-                    class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" (click)="openModalForm()" class="flex items-center cursor-pointer justify-center
-                    text-white bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:ring-blue-300 
-                    font-medium rounded-lg text-sm px-4 py-2                         
-                    dark:bg-amber-600 dark:hover:bg-amber-700 focus:outline-none dark:focus:ring-blue-800">
-                        <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path clip-rule="evenodd" fill-rule="evenodd"
-                                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                        </svg>
-                        Nuevo
-                    </button>
-                </div>
-            </div>
-
-            <!--Tabla-->
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-600 dark:text-gray-300">
-                    <thead class="bg-amber-100 bg-primary text-gray-800 dark:text-white uppercase">
-                        <tr>
-                            <th class="px-4 py-3 w-100">Nombre</th>
-                            <th class="px-4 py-3">Cantidad Disponible</th>
-                            <th class="px-4 py-3">Unidad de Medida</th>
-                            <th class="px-4 py-3 text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (item of ingredientesList; track $index) {
-                        <tr
-                            class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
-                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ item.nombre }}
-                            </td>
-                            <td class="px-4 py-3">{{ item.cantidadDisponible }}</td>
-                            <td class="px-4 py-3">{{ item.unidadMedida }}</td>
-                            <td class="px-4 py-3 flex items-center justify-end gap-2">
-                                <button (click)="openModalForm(item)"
-                                    class="inline-flex items-center px-3 py-1.5 text-sm font-medium cursor-pointer text-white bg-amber-600 hover:bg-amber-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 transition">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
-                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M15.232 5.232l3.536 3.536M9 11l6 6M3 21h18" />
-                                    </svg>
-                                    Editar
-                                </button>
-
-                                <button (click)="deleteIngrediente(item.ingredienteId)" class=" inline-flex items-center px-3 py-1.5 text-sm font-medium cursor-pointer
-                                    text-white bg-red-600 hover:bg-red-700 rounded-lg focus:outline-none focus:ring-2
-                                    focus:ring-red-400 transition">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
-                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                    Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-
-            <!--Paginador-->
-            <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
-                aria-label="Table navigation">
-
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                    Mostrando
-                    <span class="font-semibold text-gray-900 dark:text-white">{{ fromIndex }} - {{ toIndex }}</span>
-                    de
-                    <span class="font-semibold text-gray-900 dark:text-white">{{ totalItems }}</span>
-                </span>
-
-                <ul class="inline-flex items-stretch -space-x-px text-sm">
-
-                    <li>
-                        <a href="#" (click)="setPage(currentPage - 1); $event.preventDefault()"
-                            [class.opacity-50]="currentPage === 1"
-                            class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            <span class="sr-only">Anterior</span>
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </li>
-
-                    @for (page of pagesArray; track i; let i = $index) {
-                    <li>
-                        <button (click)="setPage(i + 1)" [ngClass]="{
-                              'z-10 bg-amber-50 text-blue-600 font-bold border-blue-300 hover:bg-amber-100 hover:text-blue-700 dark:bg-gray-700 dark:text-white ':
-                                currentPage === i + 1,
-                              'text-sm text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer':
-                                currentPage !== i + 1
-                            }" class="flex items-center justify-center text-sm py-2 px-3 leading-tight">
-                            {{ i + 1 }}
-                        </button>
-                    </li>
-                    }
-
-                    <li>
-                        <a href="#" (click)="setPage(currentPage + 1); $event.preventDefault()"
-                            [class.opacity-50]="currentPage === totalPages"
-                            class="flex items-center justify-center h-full py-1.5 px-3 text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            <span class="sr-only">Siguiente</span>
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
+  <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+    <div class="bg-gray-700 relative shadow-md sm:rounded-lg overflow-hidden">
+      <div
+        class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4"
+      >
+        <div></div>
+        <div
+          class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0"
+        >
+          <button
+            type="button"
+            (click)="openModalForm()"
+            class="flex items-center cursor-pointer justify-center text-white bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-amber-600 dark:hover:bg-amber-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            <svg
+              class="h-3.5 w-3.5 mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                clip-rule="evenodd"
+                fill-rule="evenodd"
+                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+              />
+            </svg>
+            Nuevo
+          </button>
         </div>
+      </div>
+
+      <!--Tabla-->
+      <div class="overflow-x-auto">
+        <table
+          class="w-full text-sm text-left text-gray-600 dark:text-gray-300"
+        >
+          <thead class="bg-amber-50 bg-primary text-white uppercase">
+            <tr>
+              <th class="px-4 py-3 w-100">Nombre</th>
+              <th class="px-4 py-3">Cantidad Disponible</th>
+              <th class="px-4 py-3">Unidad de Medida</th>
+              <th class="px-4 py-3 text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of ingredientesList; track $index) {
+            <tr
+              class="border-b border-gray-200 bg-gray-50 dark:bg-gray-500 hover:bg-gray-700 hover:text-gray-50 darkborder-gray-700 dark:text-white dark:hover:bg-gray-800 transition"
+            >
+              <td class="px-4 py-3 font-medium whitespace-nowrap">
+                {{ item.nombre }}
+              </td>
+              <td class="px-4 py-3">{{ item.cantidadDisponible }}</td>
+              <td class="px-4 py-3">{{ item.unidadMedida }}</td>
+              <td class="px-4 py-3 flex items-center justify-end gap-2">
+                <button
+                  (click)="openModalForm(item)"
+                  class="inline-flex items-center px-3 py-1.5 text-sm font-medium cursor-pointer text-white bg-amber-600 hover:bg-amber-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
+                >
+                  <svg
+                    class="w-4 h-4 mr-1"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.232 5.232l3.536 3.536M9 11l6 6M3 21h18"
+                    />
+                  </svg>
+                  Editar
+                </button>
+
+                <button
+                  (click)="deleteIngrediente(item.ingredienteId)"
+                  class="inline-flex items-center px-3 py-1.5 text-sm font-medium cursor-pointer text-white bg-red-600 hover:bg-red-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 transition"
+                >
+                  <svg
+                    class="w-4 h-4 mr-1"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!--Paginador-->
+      <nav
+        class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
+        aria-label="Table navigation"
+      >
+        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+          Mostrando
+          <span class="font-semibold text-white"
+            >{{ fromIndex }} - {{ toIndex }}</span
+          >
+          de
+          <span class="font-semibold text-white">{{ totalItems }}</span>
+        </span>
+
+        <ul class="inline-flex items-stretch -space-x-px text-sm">
+          <li>
+            <a
+              href="#"
+              (click)="setPage(currentPage - 1); $event.preventDefault()"
+              [class.opacity-50]="currentPage === 1"
+              class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              <span class="sr-only">Anterior</span>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
+          </li>
+
+          @for (page of pagesArray; track i; let i = $index) {
+          <li>
+            <button
+              (click)="setPage(i + 1)"
+              [ngClass]="{
+                'z-10 bg-amber-50 text-blue-600 font-bold border-blue-300 hover:bg-amber-100 hover:text-blue-700 dark:bg-gray-700 dark:text-white ':
+                  currentPage === i + 1,
+                'text-sm text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer':
+                  currentPage !== i + 1
+              }"
+              class="flex items-center justify-center text-sm py-2 px-3 leading-tight"
+            >
+              {{ i + 1 }}
+            </button>
+          </li>
+          }
+
+          <li>
+            <a
+              href="#"
+              (click)="setPage(currentPage + 1); $event.preventDefault()"
+              [class.opacity-50]="currentPage === totalPages"
+              class="flex items-center justify-center h-full py-1.5 px-3 text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              <span class="sr-only">Siguiente</span>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
+  </div>
 </div>
 
-
-<app-ingredientes-form-modal [isVisible]="isModalVisible" [currentIngrediente]="currentIngrediente"
-    (close)="closeModal()" (save)="saveIngredientes($event)">
+<app-ingredientes-form-modal
+  [isVisible]="isModalVisible"
+  [currentIngrediente]="currentIngrediente"
+  (close)="closeModal()"
+  (save)="saveIngredientes($event)"
+>
 </app-ingredientes-form-modal>

@@ -28,31 +28,32 @@ interface MenuItem {
   styleUrl: './plato.component.css',
 })
 export class PlatoComponent {
-
   showChildMenu: boolean = false;
   menuItems: IPlato2[] = [];
   filteredItems: IPlato2[] = [];
   categories: ICategoria2[] = [];
-  ingredientes: IIngredientes[] = []
+  ingredientes: IIngredientes[] = [];
 
   searchControl = new FormControl('');
   selectedCategory = new FormControl('');
   minPriceControl = new FormControl('');
   maxPriceControl = new FormControl('');
-  modalActivo: number = -1;
+  modalActivoIngrediente: number = -1;
+  modalActivoReceta: number = -1;
+  recetaActual: {
+    textoReceta: string;
+  } | null = null;
 
   constructor(
     private platoHttpService: PlatoHttpService,
     private categoriaHttpService: CategoriaHttpService,
     private ingredientesHttpService: IngredientesHttpService
-  ) { }
-
-
+  ) {}
 
   ngOnInit(): void {
     this.getPlatos();
     this.getCategories();
-    this.getIngredientes()
+    this.getIngredientes();
 
     this.searchControl.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
@@ -69,6 +70,20 @@ export class PlatoComponent {
       .subscribe(() => this.applyFilters());
   }
 
+  getPlatosRecetaIngrediente(id: number) {
+    this.platoHttpService.getRecetaByMenu(id).subscribe({
+      next: (response: any) => {
+        this.ingredientes = response.ingredientes;
+        this.recetaActual = {
+          textoReceta: response.receta.preparacion || 'No tiene receta',
+        };
+      },
+      error: (err) => {
+        console.error('Error al cargar la receta', err);
+        this.recetaActual = null;
+      },
+    });
+  }
   getPlatos() {
     this.platoHttpService.getAll().subscribe({
       next: (response: any) => {
@@ -104,7 +119,6 @@ export class PlatoComponent {
 
   applyFilters(): void {
     let result = this.menuItems;
-    console.log(result);
 
     // Filter by search term
     const searchTerm = this.searchControl.value?.toLowerCase();
@@ -147,23 +161,21 @@ export class PlatoComponent {
     this.filteredItems = this.menuItems;
   }
 
-  mostrarIngredientes() {
+  mostrarIngredientes() {}
 
+  abrirModalReceta(index: number) {
+    let platoId = this.filteredItems[index].categoriaId;
+    this.modalActivoReceta = index;
+    this.getPlatosRecetaIngrediente(platoId);
   }
-
-  ingredientesComunes: string[] = [
-    'Tomate',
-    'Queso',
-    'Lechuga',
-    'Pan',
-    'Carne',
-  ];
-
-  abrirModal(index: number) {
-    this.modalActivo = index;
+  abrirModalIngrediente(index: number) {
+    let platoId = this.filteredItems[index].categoriaId;
+    this.modalActivoIngrediente = index;
+    this.getPlatosRecetaIngrediente(platoId);
   }
 
   cerrarModal() {
-    this.modalActivo = -1;
+    this.modalActivoReceta = -1;
+    this.modalActivoIngrediente = -1;
   }
 }
