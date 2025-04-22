@@ -21,7 +21,7 @@
             {{ menu.descripcion }}
           </p>
           <div class="flex justify-between items-center">
-            <!-- <span class="text-xl font-bold text-amber-800">S/.{{ tipoMenu.price.toLocaleString() }}</span> -->
+            <!-- <span class="text-xl font-bold text-amber-800">${{ tipoMenu.price.toLocaleString() }}</span> -->
             <button
               (click)="toggleMenu(menu.menuId)"
               class="px-4 py-2 bg-primary text-white rounded-md hover:bg-amber-700 transition cursor-pointer"
@@ -64,7 +64,7 @@
               {{ item.descripcion }}
             </p>
             <div class="mt-4 text-amber-800 dark:text-amber-600 font-bold">
-              S/. {{ item.precio.toLocaleString() }}
+              $ {{ item.precio.toLocaleString() }}
             </div>
           </div>
         </div>
